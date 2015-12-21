@@ -33,41 +33,41 @@
 <br>28、继承的方式：1对象冒充：delete  一个方法，就可以以后不能对这个方法的调用了。
 所有的新属性和新方法都必须在删除了新方法的代码行后定义，否则，可能会覆盖超累的相关属性和方法。
 对象冒充可以支持多继承。书写形式是。
-Function z(){
-  this.newmethod=a;
-  this.newmethod();
-  delete this.newmethod;
+<br>Function z(){
+  <br>this.newmethod=a;
+  <br>this.newmethod();
+  <br>delete this.newmethod;
 
-  this.newmethod=b;
-  this.newmethod();
-  delete this.newmethod;
+  <br>this.newmethod=b;
+  <br>this.newmethod();
+  <br>delete this.newmethod;
 }
-弊端是，若方法a和b具有同样的属性和方法，后面的优先级比前面的高。
+<br>弊端是，若方法a和b具有同样的属性和方法，后面的优先级比前面的高。
 <br>2.call()方法继承。和对象冒充很相似。第一个参数是this对象，其他都是直接传递给函数自身的。这样，对象冒充的这三行就可以换成为call（）了，例如
-this.newmethod=a;
-  this.newmethod();
-  delete this.newmethod;
-可以换位a.call(this,xxx);
+<br>this.newmethod=a;
+  <br>this.newmethod();
+  <br>delete this.newmethod;
+<br>可以换位a.call(this,xxx);
 <br>3.、apply()方法继承，有两个参数，this对象，和要传递给函数的参数的数组。和call（）不同的就是，参数是数组参数了，而不是一个一个的参数。
-<br>4.原型链继承，prototype对象是个模板，要实例化的对象都以这个模板为基础， prototype对象的任何属性和方法都被传递给那个类的所以实例，原型链就是利用这种机制的。
-B.prototype=new a();把b的prototype属性设置成a的实例，这就是想要a的所有属性和方法， 但是有不行逐个将他们赋予b的prototype属性。需要注意的是，和对象冒充一样，子类的所有属性和方法都要在prototype属性被赋值之后，这样才能覆盖，原型链的弊端是不支持多重继承。
+<br>4.原型链继承，prototype对象是个模板，要实例化的对象都以这个模板为基础， <br>prototype对象的任何属性和方法都被传递给那个类的所以实例，原型链就是利用这种机制的。
+<br>B.prototype=new a();把b的prototype属性设置成a的实例，这就是想要a的所有属性和方法， <br>但是有不行逐个将他们赋予b的prototype属性。需要注意的是，和对象冒充一样，子类的所有属性和方法都要在prototype属性被赋值之后，这样才能覆<br>盖，原型链的弊端是不支持多重继承。
 <br>5.混合方式。用对象冒充继承构造函数的属性，用原型链继承prototype对象的方法。就是这两个混合。
-经常这样定义一个基类 function A(color){
-                          This.color=color;
-}
-A.prototype.getArea=function(){
+<br>经常这样定义一个基类 function A(color){
+                         <br> This.color=color;
+<br>}
+<br>A.prototype.getArea=function(){
     
-}
-子类继承A
+<br>}
+<br>子类继承A
 
-Function B(sides){
-  A.call(this,”red”);
- This.sides=sides
-}
-B.prototype=new A();
-B.prototype.getArea=function(){  //覆盖了
+<br>Function B(sides){
+  <br>A.call(this,”red”);
+ <br>This.sides=sides
+<br>}
+<br>B.prototype=new A();
+<br>B.prototype.getArea=function(){  //覆盖了
 
-}
+<br>}
 
 ----------继续记录------------
 
