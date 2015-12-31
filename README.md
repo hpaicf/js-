@@ -1,9 +1,16 @@
 # js-
 ##基础知识
-<br>1.join是数组转化为字符串   
+<br>1.join是数组转化为字符串 
+```javascript
 ·array.join(“  ”)
-  <br>中间的是每个数组的项链接的时候用什么链接
- <br> 而字符串转化为数组的方法是string.split()方法                                      <br>split方法只有一个参数，表示由字符串哪个符号开始分割为数组，若是空字符串，则返回的数组是字符串每个字符，适用于字符串的每个字符解析！！！！
+
+```
+<br>中间的是每个数组的项链接的时候用什么链接
+<br> 而字符串转化为数组的方法是
+```javascript
+string.split()
+```
+<br>split方法只有一个参数，表示由字符串哪个符号开始分割为数组，若是空字符串，则返回的数组是字符串每个字符，适用于字符串的每个字符解析！！！！
 <br>2.数组的toString()和valueOf方法输出的都是每项由逗号隔开的，函数的toStrong方法是输出函数的源代码.
 <br>3.Concat()参数值将被添加原来的末尾，返回一个新的。Slice()方法是切割的问题，切割从哪到哪或者从哪到结束
 <br>4.数组的push()方法是在末尾添加一个项，而pop是删除最后一个项  但是var a=array.pop()返回的是删除掉的，shift()是删除数组的第一项，unshift是把一个项放在第一个,然后把余下的向后移位，所以通过shift和push可以有队列的感觉
@@ -37,42 +44,54 @@
 <br>28、继承的方式：1对象冒充：delete  一个方法，就可以以后不能对这个方法的调用了。
 所有的新属性和新方法都必须在删除了新方法的代码行后定义，否则，可能会覆盖超累的相关属性和方法。
 对象冒充可以支持多继承。书写形式是。
-<br>Function z(){
-  <br>this.newmethod=a;
-  <br>this.newmethod();
-  <br>delete this.newmethod;
+<br>
+```javascript
+Function z(){
+  this.newmethod=a;
+  this.newmethod();
+  delete this.newmethod;
 
-  <br>this.newmethod=b;
-  <br>this.newmethod();
-  <br>delete this.newmethod;
+  this.newmethod=b;
+  this.newmethod();
+  delete this.newmethod;
 }
+```
+
 <br>弊端是，若方法a和b具有同样的属性和方法，后面的优先级比前面的高。
 <br>2.call()方法继承。和对象冒充很相似。第一个参数是this对象，其他都是直接传递给函数自身的。这样，对象冒充的这三行就可以换成为call（）了，例如
-<br>this.newmethod=a;
-  <br>this.newmethod();
-  <br>delete this.newmethod;
+```javascript
+this.newmethod=a;
+this.newmethod();
+delete this.newmethod;
+````
+
 <br>可以换位a.call(this,xxx);
 <br>3.、apply()方法继承，有两个参数，this对象，和要传递给函数的参数的数组。和call（）不同的就是，参数是数组参数了，而不是一个一个的参数。
-<br>4.原型链继承，prototype对象是个模板，要实例化的对象都以这个模板为基础， <br>prototype对象的任何属性和方法都被传递给那个类的所以实例，原型链就是利用这种机制的。
+<br>4.原型链继承，prototype对象是个模板，要实例化的对象都以这个模板为基础. 
+<br>prototype对象的任何属性和方法都被传递给那个类的所以实例，原型链就是利用这种机制的。
 <br>B.prototype=new a();把b的prototype属性设置成a的实例，这就是想要a的所有属性和方法， <br>但是有不行逐个将他们赋予b的prototype属性。需要注意的是，和对象冒充一样，子类的所有属性和方法都要在prototype属性被赋值之后，这样才能覆<br>盖，原型链的弊端是不支持多重继承。
 <br>5.混合方式。用对象冒充继承构造函数的属性，用原型链继承prototype对象的方法。就是这两个混合。
-<br>经常这样定义一个基类 function A(color){
-                         <br> This.color=color;
-<br>}
-<br>A.prototype.getArea=function(){
+<br>经常这样定义一个基类 
+```javascript
+function A(color){
+    This.color=color;
+}
+
+A.prototype.getArea=function(){
     
-<br>}
+    }
+```
+
 <br>子类继承A
-
-<br>Function B(sides){
-  <br>A.call(this,”red”);
- <br>This.sides=sides
-<br>}
-<br>B.prototype=new A();
-<br>B.prototype.getArea=function(){  //覆盖了
-
-<br>}
-
+```javascript
+Function B(sides){
+    A.call(this,”red”);
+    This.sides=sides
+}
+B.prototype=new A();
+B.prototype.getArea=function(){  //覆盖了
+}
+```
 ----------继续记录------------
 
 
