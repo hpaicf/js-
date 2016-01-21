@@ -1,0 +1,95 @@
+
+###利用JS提高组合拼接字符串效率?
+<br>搞过web开发的朋友都知道，在脚本开发过程中，经常会按照某个规则，组合拼接出一个大字符串进行输出。
+<br>比如写脚本控件时控制整个控件的外观的HTML标签输出，比如AJAX里得到服务器端的回传值后动态分析创建HTML标签时，不过这里我就不讨论拼接字符串的具体应用了，我只是想在这里讨论一下拼接的效率。
+<br>
+<br>字符串的拼接在我们写代码的时候都是用“+=”这个运算符，s += String;
+<br>这是我们最为熟知的写法，不知道大家有没有注意过没有，在组合的字符串容量有几十K甚至几百K的时候，脚本执行起来很慢，CPU使用率狂高，例如：
+```javascript
+var str = "01234567891123456789212345678931234567894123456789";
+str+= "51234567896123456789712345678981234567899123456789\n";
+var result = "";
+for(var i=0; i<2000; i++) result += str;
+```
+<br>就这么一步操作，产生的结果字符串是200K，
+<br>耗时是1.1秒（这个与电脑配置有关），CPU的峰值100%。（为了更直观地看到效果，我多做了些循环）。
+<br>可想而知就这么一步操作就消耗了我一秒多的时间，再加上其它的代码的时间消耗，那整个脚本块的执行时间就难以忍受了。那有没有优化的方案呢？还有其它的方法吗？答案当然是有的.
+
+<br>
+<br>
+更快的方式就是使用数组，在循环拼接的时候不是相接拼接到某个字符串里去，而是把字符串放到一个数组里，最后用数组.join("") 得到结果字符串，代码示例：
+
+在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流
+```javascript
+var str = "01234567891123456789212345678931234567894123456789";
+        str+= "51234567896123456789712345678981234567899123456789\n";
+    var result = "", a = new Array();
+    for(var i=0; i<2000; i++) a[i] = str;
+    result = a.join(""); a = null
+```
+<br>大家可以测试测试，组合出一个相同大小的字符串所消耗的时间，我这里测试出来的结果是：<15毫秒，请注意，它的单位是毫秒，也就是说组合出这么一个200K的字符串，两种模式的时间消耗是差不多##两个数量级。
+<br>这意味着什么？意味着后者已经工作结束吃完中饭回来，前者还在做着苦力。
+<br>写一个测试页面，大家可以把下面这些代码拷贝下来另存为一个HTML文件在网页里打开自己来测试一下两者之间的效率差，反正我测试的是前者要半分钟才能完成的事，后者0.07秒就搞定了（循环10000次）。
+
+```javascript
+字符串拼接次数<input id="totle" value="1000" size="5" maxlength="5">
+<input type="button" value="字符串拼接法" onclick="method1()">
+<input type="button" value="数组赋值join法" onclick="method2()"><br>
+<div id="method1"> </div>
+<div id="method2"> </div>
+<textarea id="show" style="width: 100%; height: 400"></textarea>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+//这个被拼接的字符串长是100字节 author: meizz
+var str = "01234567891123456789212345678931234567894123456789";
+    str+= "51234567896123456789712345678981234567899123456789\n";
+```
+```javascript
+方法一：
+
+
+function method1()
+{
+    var result = "";
+    var totle  = parseInt(document.getElementById("totle").value);
+    var n = new Date().getTime();
+    for(var i=0; i<totle; i++)
+    {
+        result += str;
+    }
+    document.getElementById("show").value = result;
+    var s = "字符串拼接法：拼接后的大字符串长 "+ result.length +"字节，"+
+            "拼接耗时 "+ (new Date().getTime()-n) +"毫秒！";
+    document.getElementById("method1").innerHTML = s;
+```
+
+方法二:
+```javascript
+
+function method2()
+{
+var result = "";
+var totle = parseInt(document.getElementById("totle").value);
+var n = new Date().getTime();
+
+var a = new Array();
+for(var i=0; i<TOTLE; i++)
+{
+a[i] = str;
+}
+result = a.join(""); a=null;
+
+document.getElementById("show").value = result;
+var s = "数组赋值join法：拼接后的大字符串长 "+ result.length +"字节，"+
+"拼接耗时 "+ (new Date().getTime()-n) +"毫秒！";
+document.getElementById("method2").innerHTML = s;
+}
+```
+
+##捐助开发者
+在兴趣的驱动下,写一个`免费`的东西，有欣喜，也还有汗水，希望你喜欢我的作品，同时也能支持一下。
+当然，有钱捧个钱场（右上角的爱心标志，支持支付宝和PayPal捐助），没钱捧个人场，谢谢各位。
+
+<br>最后再说几句，是不是以后字符串拼接就一律使用数组join呢？
+<br>这个要看你的实际需求了，就普通的几个或者K级的字节的组合就没有必要使用数组法了，因为开数组变量也是有
+消耗的。若有几K以上的字符串组合，那就是数组的效率高了。
