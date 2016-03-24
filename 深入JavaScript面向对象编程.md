@@ -94,4 +94,4 @@ function Chinese (name) {
 Chinese.prototype.country = 'China'; // 公共属性，所有实例共享
 ```
 
-
+<br>-------------未完--继续-------------
